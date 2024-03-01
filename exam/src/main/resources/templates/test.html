@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Test</title>
+</head>
+<body>
+<table width="100%">
+    <tr>
+        <td align="center">
+            <table>
+                <tr>
+                    <td>Menu -></td>
+                    <td><a th:href="@{/products/listProducts}">Товары</a></td>
+                    <td><a th:href="@{/carts/showCart}">Корзина</a></td>
+                    <td><a th:href="@{/admin/listUsers}">Пользователи</a></td>
+                    <td><a th:href="@{/people/profile}">Профиль</a></td>
+                </tr>
+            </table>
+        </td>
+        <td align="right">
+            <div th:if="${!#authorization.expression('isAuthenticated()')}">-->
+                       <p>Добро пожаловать, Гость! Пожалуйста <a th:href="@{/auth/login}">Авторизуйся,</a></p>
+                       <p>либо пройди <a th:href="@{/auth/registration}">Регистрацию.</a></p>
+            </div>
+
+            <div th:if="${#authentication.isAuthenticated()}">
+                    <p>Привет, <span th:text="${#authentication.name}"></span>!</p>
+            </div>
+
+                <div>
+                    <form th:method="POST" th:action="@{/logout}" th:if="${#authorization.expression('isAuthenticated()')}">
+                        <input type="submit" value="Выйти из аккаунта">
+                    </form>
+               </div>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

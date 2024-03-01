@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Show Cart</title>
+</head>
+<body>
+<h2>Корзина</h2>
+<table>
+    <tr>
+        <th></th>
+        <th>Название продукта</th>
+        <th>Количество продукта</th>
+        <th>Цена</th>
+    </tr>
+    <tr th:each="product : ${products}">
+        <td><img th:src="@{/products/images/{id}(id=${product.getPreviewImageId()})}"
+                 height="150"></td>
+        <td th:text="${product.getTitle()}"></td>
+        <td th:text="${product.getAmount()}"></td>
+        <td th:text="${product.price * product.getAmount()}"></td>
+        <td>
+            <form th:action="@{/carts/{id}/deleteProduct(id=${product.id})}" th:method="DELETE">
+                <input type="submit" value="удалить товар">
+            </form>
+        </td>
+    </tr>
+    <tr>
+        <th>Общая сумма:</th>
+        <td th:text="${totalPrice}"></td>
+    </tr>
+
+</table>
+<form th:action="@{/test}" th:method="GET">
+    <input type="submit" value="Вернуться на главную">
+</form>
+</body>
+</html>

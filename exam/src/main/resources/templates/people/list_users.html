@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Users</title>
+</head>
+<body>
+<h2>Пользователи</h2>
+
+<table>
+    <tr>
+        <th>Логин</th>
+        <th>Email</th>
+        <th>Номер телефона</th>
+        <th>Роль</th>
+        <th>Активность аккаунта</th>
+        <th>Блокировка аккаунта</th>
+        <th>Дата регистрации</th>
+    </tr>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.getUsername()}"></td>
+        <td th:text="${user.getEmail()}"></td>
+        <td th:text="${user.getTelephoneNumber()}"></td>
+        <td th:text="${user.getRoles()}"></td>
+        <td th:text="${user.isAccountActive()}"></td>
+        <td>
+            <p id="statusMessage"></p>
+            <form th:action="@{/admin/{id}/banAccount(id=${user.id})}" method="post">
+                <input type="submit" value="Заблокировать аккаунт" />
+            </form>
+
+            <form th:action="@{/admin/{id}/unbanAccount(id=${user.id})}" method="post">
+                <input type="submit" value="Разблокировать аккаунт" />
+            </form>
+        </td>
+        <td th:text="${user.getDateOfRegistration()}"></td>
+    </tr>
+</table>
+
+<br>
+
+<form th:action="@{/test}" th:method="GET">
+    <input type="submit" value="Вернуться на главную">
+</form>
+</body>
+</html>

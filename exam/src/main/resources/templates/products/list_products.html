@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>List products</title>
+</head>
+<body>
+<h2>Товары</h2>
+<br/>
+<form th:action="@{/products/searchProduct}" th:method="GET">
+    <input type="text" th:name="query" placeholder="Поиск по товарам">
+    <input type="submit" value="Найти">
+</form>
+<br/>
+<table>
+    <tr>
+        <th></th>
+        <th>Название товара</th>
+        <th>Количество</th>
+        <th>Цена за единицу товара</th>
+    </tr>
+    <tr th:each="product : ${listProducts}">
+        <td><img th:src="@{/products/images/{id}(id=${product.getPreviewImageId()})}"
+        height="150"></td>
+        <td th:text="${product.getTitle()}"></td>
+        <td th:text="${product.getAmount()}"></td>
+        <td th:text="${product.getPrice()}"></td>
+        <td>
+            <form th:method="GET" th:action="@{/products/{id}/updateProduct(id=${product.id})}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                <input type="submit" value="Редактировать">
+            </form>
+        </td>
+        <td>
+            <form th:method="POST" th:action="@{/carts/{id}/addProduct(id=${product.id})}">
+                <input type="submit" value="Добавить в корзину">
+            </form>
+        </td>
+        <td>
+            <form th:method="DELETE" th:action="@{/products/{id}(id=${product.id})}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                <input type="submit" value="Удалить продукт">
+            </form>
+        </td>
+    </tr>
+</table>
+
+<br/>
+<form th:method="GET" th:action="@{/products/createProduct}" th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+    <input type="submit" value="Добавить товар">
+</form>
+
+<br/>
+
+<form th:action="@{/test}" th:method="GET">
+    <input type="submit" value="Вернуться на главную">
+</form>
+</body>
+</html>

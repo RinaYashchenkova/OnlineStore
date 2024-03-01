@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create product</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/products/create}" th:object="${product}" enctype="multipart/form-data">
+    <h2>Создание товара</h2>
+    <table>
+        <tr>
+            <td>Загрузить изображение:</td>
+            <td><input type="file" name="file"></td>
+        </tr>
+        <tr>
+            <td>Название товара:</td>
+            <td><input type="text" th:field="*{title}"></td>
+            <td style="color:red" class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></td>
+        </tr>
+        <tr>
+            <td>Количество товара:</td>
+            <td><input type="text" th:field="*{amount}"></td>
+            <td style="color:red" class="error" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}"></td>
+
+        </tr>
+        <tr>
+            <td>Цена товара за 1 единицу</td>
+            <td><input type="text" th:field="*{price}"></td>
+            <td style="color:red" class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></td>
+        </tr>
+    </table>
+    <input type="submit" value="добавить товар">
+</form>
+</body>
+</html>

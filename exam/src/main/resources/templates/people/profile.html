@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+</head>
+<body>
+<h2>Профиль</h2>
+<table>
+    <tr>
+        <td>Логин:</td>
+        <td th:text="${person.username}"></td>
+    </tr>
+    <tr>
+        <td>Email:</td>
+        <td th:text="${person.email}"></td>
+    </tr>
+    <tr>
+        <td>Телефон:</td>
+        <td th:text="${person.telephoneNumber}"></td>
+    </tr>
+</table>
+
+<br/>
+
+<form th:action="@{/test}" th:method="GET">
+    <input type="submit" value="Вернуться на главную">
+</form>
+</body>
+</html>
